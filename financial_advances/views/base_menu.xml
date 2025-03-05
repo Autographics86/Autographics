@@ -1,0 +1,5 @@
+<odoo>
+    <menuitem id="financial_advances_menu" 
+              name="Financial Advances"
+              sequence="10"/>
+</odoo>

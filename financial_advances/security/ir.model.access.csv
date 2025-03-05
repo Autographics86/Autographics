@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employees_financial_advances,employees.financial.advances,model_employees_financial_advances,base.group_user,1,1,1,1
+access_employees_financial_installments,employees.financial.installments,model_employees_financial_installments,base.group_user,1,1,1,1
+access_farmers_financial_advances,farmers.financial.advances,model_farmers_financial_advances,base.group_user,1,1,1,1
+access_farmers_financial_installments,farmers.financial.installments,model_farmers_financial_installments,base.group_user,1,1,1,1
+access_financial_configuration,financial.configuration,model_financial_configuration,base.group_user,1,1,1,1

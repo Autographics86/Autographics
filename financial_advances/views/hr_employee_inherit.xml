@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_view_form_inherit_financial" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.financial</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="priority" eval="1" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Financial Advances" invisible="show_financial_advances_tab">
+                    <field name="financial_advance_ids" widget="one2many_list" nolabel="1" >
+                        <list string="Financial Advances" create="false" delete="false">
+                            <field name="advance_amount" />
+                            <field name="num_installments" />
+                            <field name="installment_value" />
+                            <field name="advance_start_date" />
+                            <field name="advance_end_date" />
+                        </list>
+                    </field>
+                </page>
+                </xpath>
+        </field>
+    </record>
+</odoo>

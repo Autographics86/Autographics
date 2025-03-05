@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="farmers_advances_tree_view" model="ir.ui.view">
+        <field name="name">Farmers Advances Tree View</field>
+        <field name="model">farmers.financial.advances</field>
+        <field name="arch" type="xml">
+            <list string="Employees Advances">
+                <field name="farmer_id"/>
+                <field name="advance_amount"/>
+                <field name="stage"/>
+                <field name="advance_start_date"/>
+                <field name="num_installments"/>
+                <field name="installment_value"/>
+                
+            </list>
+        </field>
+    </record>
+    <record id="farmers_advances_form_view" model="ir.ui.view">
+        <field name="name">Farmers Advances Form View</field>
+        <field name="model">farmers.financial.advances</field>
+        <field name="arch" type="xml">
+            <form string="Farmers Advances">
+            <header>
+                    <button name="post_farmer_financial" string="Post" type="object" class="oe_highlight" invisible="stage == 'post'"/>
+                </header>
+                <sheet>
+                <header>
+                <field name="stage" widget="statusbar" statusbar_visible="draft,post" statusbar_colors='{"draft": "red", "post": "green"}' statusbar_click="0"/>
+                </header>
+                    <group>
+                        <field name="farmer_id"/>
+                        <field name="advance_amount"/>
+                        <field name="currency_id"/>
+                        <field name="num_installments"/> 
+                        <field name="deducation_period"/> 
+                        <field name="advance_start_date"/>
+                        <field name="advance_end_date"/>
+                        <field name="installment_value"/>
+                        <!-- <field name="account_payment_id" readonly="1"/> -->
+                        <field name="account_move_id" readonly="1"/>
+                        <field name="total_pay"/>
+                        <field name="installment_ids" widget="one2many_list" readonly="1">
+                            <list string="Installments">
+                                <field name="description"/>
+                                <field name="account_move_state"/>
+                                <field name="installment_amount"/>
+                                <field name="installment_date"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <!-- Action for Employees Advances -->
+    <record id="farmers_advances_action" model="ir.actions.act_window">
+        <field name="name">Farmers Advances</field>
+        <field name="res_model">farmers.financial.advances</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="farmers_advances_tree_view"/>
+    </record>
+
+    <!-- Menu Item for Employees Advances -->
+    <menuitem id="farmers_advances_menu" 
+              name="Farmers Advances"
+              parent="financial_advances_menu"
+              action="farmers_advances_action"
+              sequence="10"/>
+</odoo>

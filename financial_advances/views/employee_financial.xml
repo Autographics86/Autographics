@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree view for Employees Advances -->
+    <record id="employees_advances_tree_view" model="ir.ui.view">
+        <field name="name">Farmer Advances Tree View</field>
+        <field name="model">employees.financial.advances</field>
+        <field name="arch" type="xml">
+            <list string="Employees Advances">
+                <field name="employee_id"/>
+                <field name="advance_amount"/>
+                <field name="num_installments"/>
+                <field name="installment_value"/>
+                <field name="advance_start_date"/>
+            </list>
+        </field>
+    </record>
+    <record id="employees_advances_form_view" model="ir.ui.view">
+        <field name="name">Employees Advances Form View</field>
+        <field name="model">employees.financial.advances</field>
+        <field name="arch" type="xml">
+            <form string="Employees Advances">
+            <header>
+                    <button name="post_employee_financial" string="Post" type="object" class="oe_highlight" invisible="stage == 'post'"/>
+                </header>
+                <sheet>
+                <header>
+                <field name="stage" widget="statusbar" statusbar_visible="draft,post" statusbar_colors='{"draft": "red", "post": "green"}' statusbar_click="0"/>
+                </header>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="advance_amount"/>
+                        <field name="currency_id"/>
+                        <field name="num_installments"/>
+                        <field name="installment_value"/>
+                        <field name="advance_start_date"/>
+                        <field name="advance_end_date"/>
+                        <field name="installment_ids" widget="one2many_list" readonly="1">
+                            <list string="Installments">
+                                <field name="description"/>
+                                <field name="installment_amount"/>
+                                <field name="installment_date"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <!-- Action for Employees Advances -->
+    <record id="employees_advances_action" model="ir.actions.act_window">
+        <field name="name">Employees Advances</field>
+        <field name="res_model">employees.financial.advances</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="employees_advances_tree_view"/>
+    </record>
+
+    <!-- Menu Item for Employees Advances -->
+    <menuitem id="employees_advances_menu" 
+              name="Employees Advances"
+              parent="financial_advances_menu"
+              action="employees_advances_action"
+              sequence="10"/>
+</odoo>

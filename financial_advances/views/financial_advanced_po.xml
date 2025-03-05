@@ -1,0 +1,307 @@
+<odoo>
+<template id="portal_my_financial" name="My Financial Advances">
+    <t t-call="portal.portal_layout">
+        <t t-set="breadcrumbs">
+            <li><a href="/my">Home</a></li>
+            <li>Financial Advances</li>
+        </t>
+            
+            <!-- Financial Summary Cards -->
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Bill Payment</h5>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount</h6>
+                                            <h4 t-esc="format_amount(total_amount)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount Paid</h6>
+                                            <h4 t-esc="format_amount(total_amount_paid)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount Not Paid</h6>
+                                            <h4 t-esc="format_amount(total_amount_unpaid)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Financial Details -->
+            <div class="row mt-2">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Financial Advance</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-4">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount</h6>
+                                            <h4 t-esc="format_amount(advance_amount_total)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount Paid</h6>
+                                            <h4 t-esc="format_amount(total_paid)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Total Amount Not Paid</h6>
+                                            <h4 t-esc="format_amount(total_not_paid)" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Stock Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Demand Quantity Total</h6>
+                                            <h4 t-esc="total_quantity_demand" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Receipt Quantity Total</h6>
+                                            <h4 t-esc="receipt_quantity_total" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body text-center">
+                                            <h6>Remaining Quantity Total</h6>
+                                            <h4 t-esc="remaining_quantity" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    </t>
+</template>
+
+<!-- Detail view for a specific advance (Keeping this the same as before) -->
+<template id="portal_my_financial_advance" name="My Financial Advance Detail">
+    <t t-call="portal.portal_layout">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/my/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/my/financial">Financial Advances</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><t t-esc="advance.name"/></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Advance Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>Reference:</th>
+                                    <td><span t-field="advance.name"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Advance Amount:</th>
+                                    <td>
+                                        <span t-field="advance.advance_amount" 
+                                              t-options='{"widget": "monetary", "display_currency": advance.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Start Date:</th>
+                                    <td><span t-field="advance.advance_start_date"/></td>
+                                </tr>
+                                <tr>
+                                    <th>End Date:</th>
+                                    <td><span t-field="advance.advance_end_date"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Installments:</th>
+                                    <td><span t-field="advance.num_installments"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Installment Value (Week):</th>
+                                    <td>
+                                        <span t-field="advance.installment_value" 
+                                              t-options='{"widget": "monetary", "display_currency": advance.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Deduction Period (Week):</th>
+                                    <td><span t-field="advance.deducation_period"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>
+                                        <span t-if="advance.stage == 'draft'" class="badge bg-secondary">Draft</span>
+                                        <span t-if="advance.stage == 'post'" class="badge bg-success">Posted</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Payment Progress</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <h6>Total Paid: <span t-esc="format_amount(advance_paid_amount)"/></h6>
+                                <h6>Remaining: <span t-esc="format_amount(advance_remaining_amount)"/></h6>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     t-att-style="'width: %s%%;' % payment_progress" 
+                                     t-att-aria-valuenow="payment_progress" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                    <t t-esc="payment_progress"/>%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Installment Schedule</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="advance.installment_ids" t-as="installment">
+                                            <tr>
+                                                <td><span t-field="installment.installment_date"/></td>
+                                                <td><span t-field="installment.description"/></td>
+                                                <td>
+                                                    <span t-field="installment.installment_amount" 
+                                                          t-options='{"widget": "monetary", "display_currency": advance.currency_id}'/>
+                                                </td>
+                                                <td>
+                                                    <span t-if="installment.account_move_state == 'draft'" class="badge bg-secondary">Pending</span>
+                                                    <span t-if="installment.account_move_state == 'posted'" class="badge bg-success">Paid</span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Deductions for this Advance -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Related Deductions</h5>
+                        </div>
+                        <div class="card-body">
+                            <div t-if="not advance_deductions" class="alert alert-info">
+                                No deductions related to this advance.
+                            </div>
+                            <div t-if="advance_deductions" class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="advance_deductions" t-as="deduction">
+                                            <tr>
+                                                <td><span t-field="deduction.date"/></td>
+                                                <td><span t-field="deduction.description"/></td>
+                                                <td><span t-field="deduction.category_id.name"/></td>
+                                                <td>
+                                                    <span t-field="deduction.amount" 
+                                                          t-options='{"widget": "monetary", "display_currency": advance.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+</odoo>

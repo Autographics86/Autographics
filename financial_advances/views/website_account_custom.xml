@@ -1,0 +1,29 @@
+<odoo>
+    <!-- Inherit the website account template -->
+    <template id="portal_my_home_unpaid_amount" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                <t t-set="title">Financial Advances</t>
+                <t t-set="url" t-value="'/my/financial'"/>
+                <t t-set="text">View Financial Advances</t>
+                <t t-set="placeholder_count" t-value="'farmer_count'"/>
+            </t>
+        </xpath>
+    </template>
+    
+    <template id="portal_breadcrumbs_financial" name="Portal Breadcrumbs Financial" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'financial'" class="breadcrumb-item">
+                <a t-if="financial_advances" t-attf-href="/my/financial">Financial Advances</a>
+                <t t-else="">Financial Advances</t>
+            </li>
+            <li t-if="advance and page_name == 'financial_advance'" class="breadcrumb-item">
+                <a t-attf-href="/my/financial">Financial Advances</a>
+            </li>
+            <li t-if="advance and page_name == 'financial_advance'" class="breadcrumb-item active">
+                <t t-esc="advance.name"/>
+            </li>
+        </xpath>
+    </template>
+</odoo>

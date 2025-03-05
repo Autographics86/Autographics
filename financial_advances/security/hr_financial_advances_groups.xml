@@ -1,0 +1,8 @@
+<odoo>
+<record id="financial_advance_employee_rule" model="ir.rule">
+    <field name="name">Employee Financial Advances</field>
+    <field name="model_id" ref="model_hr_employee"/>
+    <field name="domain_force">[('user_id', '=', user.id)] if not user.has_group('hr.group_hr_manager') else [(1, '=', 1)]</field>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+</record>
+</odoo>
